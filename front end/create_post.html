@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Localised corruption exposure and public awareness">
+	  <meta name="keywords" content="web design,social change,grassroots">
+  	<meta name="author" content="Kyppy Simani">
+    <title>iReporter | Create Post</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+
+    <header>
+      <div class="container">
+        <div id="branding">
+          <h1><span class="highlight_i">i</span><span class="highlight_rep">Reporter</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li><a href="user_home.html">Home</a></li>
+            <li class="current"><a href="create_post.html">Post</a></li>
+            <li><a href="user_profile.html">Profile</a></li>
+            <li><a href="index.html">Log Out</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="post_form">
+        <h3 class="form_head">Create a post!</h3>
+            <div>
+             <form class="user_post">
+                <label>Post Type:</label>
+                <select>
+                    <option value="red-flag">Red-flag</option>
+                    <option value="intervention">Intervention</option>
+                </select><br>
+                <label>Title:</label>
+                <input type="text" placeholder="Title of post"><br>
+                <label>Message:</label>
+                <textarea></textarea><br>
+                <label>Location:</label>
+                <input type="text" placeholder="Please enter lat-long coordinates"><br>
+                <label>Image:</label>
+                <input type="file" accept="image/png, image/jpeg"><br>
+                <label>Video:</label>
+                <input type="file" accept="image/png, image/jpeg"><br>
+                <div>
+                    <button class="button_2" type="submit">Post your message!</button>
+                </div>
+              </form>
+            </div>
+      </section>
+
+      <footer>
+        <p>iReporter, Copyright &copy; 2018</p>
+      </footer>  
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Localised corruption exposure and public awareness">
+	  <meta name="keywords" content="web design,social change,grassroots">
+  	<meta name="author" content="Kyppy Simani">
+    <title>iReporter | Admin Home</title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+
+  <header>
+      <div class="container">
+        <div id="branding">
+          <h1><span class="highlight_i">i</span><span class="highlight_rep">Reporter</span></h1>
+        </div>
+        <nav>
+          <ul>
+            <li class="current"><a href="user_home.html">Home</a></li>
+            <li><a href="create_post.html">Post</a></li>
+            <li><a href="user_profile.html">Profile</a></li>
+            <li><a href="index.html">Log Out</a></li>
+          </ul>
+        </nav>
+      </div>
+  </header>
+
+  <header id="admin_filter">
+      <h>Filter Records By:</h>
+        <div>
+            <form id="admin_options">
+                <label>Username:</label>
+                <input type="text" placeholder="Enter a username">
+                <label>Date:</label>
+                <input type="text" placeholder="Enter a date">
+                <label>Record Type:</label>
+                <select>
+                    <option value="red-flag">Red-flag</option>
+                    <option value="intervention">Intervention</option>
+                </select>
+            </form>
+        </div>
+    </header>
+
+    <section id="post_display">
+        <div class="posts">
+            <div>
+                <h>User Dummy Post 1 [Unresolved]</h>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo urna, congue in purus vitae, tincidunt porta dolor. In eu pretium ante, sit amet ullamcorper orci. Phasellus eu cursus odio. Ut bibendum malesuada porta. Suspendisse commodo nisi id leo finibus, in lacinia purus volutpat. Nunc nec ornare sem. Etiam sed commodo eros. Sed a metus leo. Etiam varius massa quis sapien ultrices, quis placerat sem elementum. </p>
+                <button type="submit">DELETE</button>
+                <button type="submit">RESOLVED</button>
+                <button type="submit">REJECT</button>
+            </div>
+            <div>
+                <h>User Dummy Post 2 [Resolved]</h>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo urna, congue in purus vitae, tincidunt porta dolor. In eu pretium ante, sit amet ullamcorper orci. Phasellus eu cursus odio. Ut bibendum malesuada porta. Suspendisse commodo nisi id leo finibus, in lacinia purus volutpat. Nunc nec ornare sem. Etiam sed commodo eros. Sed a metus leo. Etiam varius massa quis sapien ultrices, quis placerat sem elementum. </p>
+                <button type="submit">DELETE</button>
+                <button type="submit">RESOLVED</button>
+                <button type="submit">REJECT</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>iReporter, Copyright &copy; 2018</p>
+    </footer>
+
+  </body>
+</html>
