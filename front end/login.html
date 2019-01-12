@@ -30,11 +30,12 @@
     <section id="form">
         <h3 class="form_head">Welcome to iReporter!</h3>
         <div class="dark">
-            <form class="sign_up">
-                <label>Email:</label><br>
-                <input type="text" placeholder="Email Address"><br>
+            <form id="login"class="sign_up">
+                <label>Username:</label><br>
+                <input type="text" id="username"placeholder="Your Username"><br>
                 <label>Password:</label><br>
-                <input type="text" placeholder="Password"><br>
+                <input type="text" id="password"placeholder="Your Password"><br>
+                <input type="submit" value="Submit">
             </form>
             <div>
               <button class="login_btn" onclick="location.href='user_home.html'"class="btn_login">Login</button>
@@ -43,8 +44,51 @@
     </section>
 
     <footer id="login_footer">
-      <p>iReporter, Copyright &copy; 2018</p>
+      <p>iReporter, Copyright &copy; 2019</p>
     </footer>
+
+    <script>
+        document.getElementById('login').addEventListener('submit', Login);
+  
+        function Login(e){
+          e.preventDefault();
+  
+          let username = document.getElementById('username').value;
+          let password = document.getElementById('password').value;
+  
+          fetch('http://127.0.0.1:5000/api/v1/auth/login', {
+            method:'POST',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-type':'application/json'
+            },
+            body:JSON.stringify({username:username, password:password})
+          })
+          .then((res) => {
+            if (res.ok){
+              return res.json()
+            }
+            else{
+              return Promise.reject({
+                status: res.status
+              })
+            }
+          })
+          .then((data) => {
+            sessionStorage.setItem('user',username)
+            sessionStorage.setItem('token',data.data[0].token)
+            window.location='user_home.html'
+          })
+          .catch(error => {
+            if (error.status === 400){
+              return console.log("Bad Credentials")
+            }
+          })
+        }
+      
+      </script>
+
+
 
   </body>
 </html>
