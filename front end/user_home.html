@@ -69,6 +69,7 @@
               <li>Status: ${user.status}</li>
               <li>Message Location: ${user.comment}</li>
             </ul>
+            <button id="${user.id}" onClick="deleteIntervention(this.id)">DELETE</button>
           `;
         });
         document.getElementById('interventions').innerHTML = output
@@ -88,6 +89,7 @@
               <li>Status: ${user.status}</li>
               <li>Message Location: ${user.comment}</li>
             </ul>
+            <button id="${user.id}" onClick="deleteRedflag(this.id)">DELETE</button>
           `;
         });
         document.getElementById('redflags').innerHTML = output
@@ -130,7 +132,6 @@
                 </ul>
               `;
             });
-            //console.log(output)
             document.getElementById('results').innerHTML = output
           })
           .catch(error => {
@@ -171,5 +172,56 @@
       }
     </script>
 
+    <script>
+      //Delete an intervention
+      function deleteIntervention(post_id)
+      {
+          let token = sessionStorage.getItem('token')
+          let bearer ='Bearer '+ token
+          fetch(`http://127.0.0.1:5000/api/v1/intervention/${post_id}`,{
+          method: 'DELETE',
+          headers: {
+            'Authorization':bearer
+          }})
+          .then((res) => {
+            if (res.ok){
+              window.location.reload()
+            }
+            else{
+              return Promise.reject({
+                res
+              })
+            }
+          })
+          .catch(error => {
+              return console.log(bearer)
+          })
+      }
+
+      //Delete a redflag
+      function deleteRedflag(post_id)
+      {
+          let token = sessionStorage.getItem('token')
+          let bearer ='Bearer '+ token
+          fetch(`http://127.0.0.1:5000/api/v1/redflag/${post_id}`,{
+          method: 'DELETE',
+          headers: {
+            'Authorization':bearer
+          }})
+          .then((res) => {
+            if (res.ok){
+              window.location.reload()
+            }
+            else{
+              return Promise.reject({
+                res
+              })
+            }
+          })
+          .catch(error => {
+              return console.log(bearer)
+          })
+      }
+    </script>
   </body>
 </html>
