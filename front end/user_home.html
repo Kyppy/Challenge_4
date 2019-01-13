@@ -28,40 +28,148 @@
   </header>
 
   <header id="admin_filter">
-    <h>Filter Records By:</h>
+    <h>Search Incident By ID:</h>
       <div>
           <form id="admin_options">
-              <label>Username:</label>
-              <input type="text" placeholder="Enter a username">
-              <label>Date:</label>
-              <input type="text" placeholder="Enter a date">
+              <label>ID:</label>
+              <input type="text" id ="post_id"placeholder="Enter incident ID">
               <label>Record Type:</label>
-              <select>
-                  <option value="red-flag">Red-flag</option>
-                  <option value="intervention">Intervention</option>
+              <select id="incident">
+                  <option value="Redflag">Redflag</option>
+                  <option value="Intervention">Intervention</option>
               </select>
+              <input type="submit" value="Search!">
           </form>
       </div>
   </header>
 
-    <section id="post_display">
-        <div class="posts">
-            <div>
-                <h>User Dummy Post 1 [Unresolved]</h>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo urna, congue in purus vitae, tincidunt porta dolor. In eu pretium ante, sit amet ullamcorper orci. Phasellus eu cursus odio. Ut bibendum malesuada porta. Suspendisse commodo nisi id leo finibus, in lacinia purus volutpat. Nunc nec ornare sem. Etiam sed commodo eros. Sed a metus leo. Etiam varius massa quis sapien ultrices, quis placerat sem elementum. </p>
-                <button type="submit">EDIT</button>
-            </div>
-            <div>
-                <h>User Dummy Post 2 [Resolved]</h>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur leo urna, congue in purus vitae, tincidunt porta dolor. In eu pretium ante, sit amet ullamcorper orci. Phasellus eu cursus odio. Ut bibendum malesuada porta. Suspendisse commodo nisi id leo finibus, in lacinia purus volutpat. Nunc nec ornare sem. Etiam sed commodo eros. Sed a metus leo. Etiam varius massa quis sapien ultrices, quis placerat sem elementum. </p>
-                <button type="submit">EDIT</button>
-            </div>
-        </div>
-    </section>
+    <div id="results"></div>
+    <div id="interventions"></div>
+    <div id="redflags"></div>
+
 
     <footer>
       <p>iReporter, Copyright &copy; 2018</p>
     </footer>
+
+    
+    <script>
+      //Post a list of all incidents on the user home page
+      fetch('http://127.0.0.1:5000/api/v1/interventions')
+      .then((res) => res.json())
+      .then((data) => {
+        let output = '<h2>Interventions</h2>';
+        data.data.forEach(function(user){
+          output += `
+            <ul>
+              <li>Post ID: ${user.id}</li>
+              <li>Author: ${user.createdBy}</li>
+              <li>Post Date: ${user.createdOn}</li>
+              <li>Incident Location: ${user.location}</li>
+              <li>Status: ${user.status}</li>
+              <li>Message Location: ${user.comment}</li>
+            </ul>
+          `;
+        });
+        document.getElementById('interventions').innerHTML = output
+      })
+
+      fetch('http://127.0.0.1:5000/api/v1/redflags')
+      .then((res) => res.json())
+      .then((data) => {
+        let output = '<h2>Redflags</h2>';
+        data.data.forEach(function(user){
+          output += `
+            <ul>
+              <li>Post ID: ${user.id}</li>
+              <li>Author: ${user.createdBy}</li>
+              <li>Post Date: ${user.createdOn}</li>
+              <li>Incident Location: ${user.location}</li>
+              <li>Status: ${user.status}</li>
+              <li>Message Location: ${user.comment}</li>
+            </ul>
+          `;
+        });
+        document.getElementById('redflags').innerHTML = output
+      })
+    </script> 
+
+    <script>
+      //Return a single incident post based on its ID
+      document.getElementById('admin_options').addEventListener('submit',searchPost);
+
+      function searchPost(e){
+        e.preventDefault();
+
+        let post_id = document.getElementById('post_id').value;
+        let incident = document.getElementById('incident').value;
+        if(incident ==="Intervention"){
+          fetch(`http://127.0.0.1:5000/api/v1/intervention/${post_id}`)
+          .then((res) => {
+            if (res.ok){
+              console.log(incident)
+              return res.json()
+            }
+            else{
+              return Promise.reject({
+                status: res.status
+              })
+            }
+          })
+          .then((data) => {
+            let output = '<h2>Search Result</h2>';
+            data.data.forEach(function(user){
+              output += `
+                <ul>
+                  <li>Post ID: ${user.id}</li>
+                  <li>Author: ${user.createdBy}</li>
+                  <li>Post Date: ${user.createdOn}</li>
+                  <li>Incident Location: ${user.location}</li>
+                  <li>Status: ${user.status}</li>
+                  <li>Message Location: ${user.comment}</li>
+                </ul>
+              `;
+            });
+            //console.log(output)
+            document.getElementById('results').innerHTML = output
+          })
+          .catch(error => {
+              return console.log("Invalid ID")
+          })  
+        }else{
+          fetch(`http://127.0.0.1:5000/api/v1/redflag/${post_id}`)
+          .then((res) => {
+            if (res.ok){
+              return res.json()
+            }
+            else{
+              return Promise.reject({
+                status: res.status
+              })
+            }
+          })
+          .then((data) => {
+            let output = '<h2>Search Result</h2>';
+            data.data.forEach(function(user){
+              output += `
+                <ul>
+                  <li>Post ID: ${user.id}</li>
+                  <li>Author: ${user.createdBy}</li>
+                  <li>Post Date: ${user.createdOn}</li>
+                  <li>Incident Location: ${user.location}</li>
+                  <li>Status: ${user.status}</li>
+                  <li>Message Location: ${user.comment}</li>
+                </ul>
+              `;
+            });
+            document.getElementById('results').innerHTML = output
+          })
+          .catch(error => {
+              return console.log("Bad Credentials")
+          })
+        }
+      }
+    </script>
 
   </body>
 </html>
