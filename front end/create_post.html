@@ -64,8 +64,8 @@
         function Post(e){
           e.preventDefault();
 
-          let token = sessionStorage.getItem('token')
-          let bearer ='Bearer '+ token
+          let token = sessionStorage.getItem('token');
+          let bearer ='Bearer '+ token;
           let incident = document.getElementById('incident').value;
           let comment = document.getElementById('message').value;
           let location = document.getElementById('location').value;

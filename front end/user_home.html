@@ -67,9 +67,11 @@
               <li>Post Date: ${user.createdOn}</li>
               <li>Incident Location: ${user.location}</li>
               <li>Status: ${user.status}</li>
-              <li>Message Location: ${user.comment}</li>
+              <li>Message: ${user.comment}</li>
             </ul>
             <button id="${user.id}" onClick="deleteIntervention(this.id)">DELETE</button>
+            <button id="${user.id}" onClick="editIntercomment_1(this.id)">EDIT Comment</button>
+            <button id="${user.id}" onClick="editInterlocation_1(this.id)">EDIT Location</button>
           `;
         });
         document.getElementById('interventions').innerHTML = output
@@ -87,9 +89,11 @@
               <li>Post Date: ${user.createdOn}</li>
               <li>Incident Location: ${user.location}</li>
               <li>Status: ${user.status}</li>
-              <li>Message Location: ${user.comment}</li>
+              <li>Message: ${user.comment}</li>
             </ul>
             <button id="${user.id}" onClick="deleteRedflag(this.id)">DELETE</button>
+            <button id="${user.id}" onClick="editRedcomment_1(this.id)">EDIT Comment</button>
+            <button id="${user.id}" onClick="editRedlocation_1(this.id)">EDIT Location</button>
           `;
         });
         document.getElementById('redflags').innerHTML = output
@@ -128,7 +132,7 @@
                   <li>Post Date: ${user.createdOn}</li>
                   <li>Incident Location: ${user.location}</li>
                   <li>Status: ${user.status}</li>
-                  <li>Message Location: ${user.comment}</li>
+                  <li>Message: ${user.comment}</li>
                 </ul>
               `;
             });
@@ -159,7 +163,7 @@
                   <li>Post Date: ${user.createdOn}</li>
                   <li>Incident Location: ${user.location}</li>
                   <li>Status: ${user.status}</li>
-                  <li>Message Location: ${user.comment}</li>
+                  <li>Message: ${user.comment}</li>
                 </ul>
               `;
             });
@@ -173,7 +177,7 @@
     </script>
 
     <script>
-      //Delete an intervention
+      //Delete an intervention post
       function deleteIntervention(post_id)
       {
           let token = sessionStorage.getItem('token')
@@ -198,7 +202,7 @@
           })
       }
 
-      //Delete a redflag
+      //Delete a redflag post
       function deleteRedflag(post_id)
       {
           let token = sessionStorage.getItem('token')
@@ -221,6 +225,290 @@
           .catch(error => {
               return console.log(bearer)
           })
+      }
+
+      //Change page for edit Intervention comment section
+      function editIntercomment_1(post_id)
+      {
+        fetch(`http://127.0.0.1:5000/api/v1/intervention/${post_id}`)
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          let output = '<h2>Edit Intervention Comment</h2>';
+          data.data.forEach(function(user){
+            output += `
+              <ul>
+                <li>Post ID: ${user.id}</li>
+                <li>Author: ${user.createdBy}</li>
+                <li>Post Date: ${user.createdOn}</li>
+                <li>Incident Location: ${user.location}</li>
+                <li>Status: ${user.status}</li>
+                <li>Message: ${user.comment}</li>
+              </ul>
+              <label>Edit Message:</label>
+              <textarea id="edit_inter_comment"></textarea><br>
+              <button id="${user.id}" onClick="editIntercomment_2(this.id)">Submit Edit</button>
+            `;
+          });
+          document.getElementById('results').innerHTML = output
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+      //Consumes PATCH resource to edit intervention comment
+      function editIntercomment_2(post_id)
+      {
+        let token = sessionStorage.getItem('token');
+        let bearer ='Bearer '+ token;
+        let comment = document.getElementById('edit_inter_comment').value;
+        fetch(`http://127.0.0.1:5000/api/v1/interventions/${post_id}/comment`,{
+            method:'PATCH',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Authorization':bearer,
+              'Content-type':'application/json'
+            },
+            body:JSON.stringify({comment:comment})
+            })
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          window.location.reload()
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+      //Change page for edit Intervention location section
+      function editInterlocation_1(post_id)
+      {
+        fetch(`http://127.0.0.1:5000/api/v1/intervention/${post_id}`)
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          let output = '<h2>Edit Intervention Location</h2>';
+          data.data.forEach(function(user){
+            output += `
+              <ul>
+                <li>Post ID: ${user.id}</li>
+                <li>Author: ${user.createdBy}</li>
+                <li>Post Date: ${user.createdOn}</li>
+                <li>Incident Location: ${user.location}</li>
+                <li>Status: ${user.status}</li>
+                <li>Message: ${user.comment}</li>
+              </ul>
+              <label>Edit Location:</label>
+              <input type="text" id="edit_inter_location"placeholder="Please enter lat-long coordinates"><br>
+              <button id="${user.id}" onClick="editInterlocation_2(this.id)">Submit Edit</button>
+            `;
+          });
+          document.getElementById('results').innerHTML = output
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+      //Consumes PATCH resource to edit intervention location
+      function editInterlocation_2(post_id)
+      {
+        let token = sessionStorage.getItem('token');
+        let bearer ='Bearer '+ token;
+        let location = document.getElementById('edit_inter_location').value;
+        fetch(`http://127.0.0.1:5000/api/v1/interventions/${post_id}/location`,{
+            method:'PATCH',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Authorization':bearer,
+              'Content-type':'application/json'
+            },
+            body:JSON.stringify({location:location})
+            })
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          window.location.reload()
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+       //Change page to edit Redflag comment section
+       function editRedcomment_1(post_id)
+      {
+        fetch(`http://127.0.0.1:5000/api/v1/redflag/${post_id}`)
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          let output = '<h2>Edit Redflag Comment</h2>';
+          data.data.forEach(function(user){
+            output += `
+              <ul>
+                <li>Post ID: ${user.id}</li>
+                <li>Author: ${user.createdBy}</li>
+                <li>Post Date: ${user.createdOn}</li>
+                <li>Incident Location: ${user.location}</li>
+                <li>Status: ${user.status}</li>
+                <li>Message: ${user.comment}</li>
+              </ul>
+              <label>Edit Message:</label>
+              <textarea id="edit_red_comment"></textarea><br>
+              <button id="${user.id}" onClick="editRedcomment_2(this.id)">Submit Edit</button>
+            `;
+          });
+          document.getElementById('results').innerHTML = output
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+      //Consumes PATCH resource to edit Redflag comment
+      function editRedcomment_2(post_id)
+      {
+        let token = sessionStorage.getItem('token');
+        let bearer ='Bearer '+ token;
+        let comment = document.getElementById('edit_red_comment').value;
+        fetch(`http://127.0.0.1:5000/api/v1/redflags/${post_id}/comment`,{
+            method:'PATCH',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Authorization':bearer,
+              'Content-type':'application/json'
+            },
+            body:JSON.stringify({comment:comment})
+            })
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          window.location.reload()
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+      //Change page to edit Redflag location section
+      function editRedlocation_1(post_id)
+      {
+        fetch(`http://127.0.0.1:5000/api/v1/redflag/${post_id}`)
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          let output = '<h2>Edit Redflag Location</h2>';
+          data.data.forEach(function(user){
+            output += `
+              <ul>
+                <li>Post ID: ${user.id}</li>
+                <li>Author: ${user.createdBy}</li>
+                <li>Post Date: ${user.createdOn}</li>
+                <li>Incident Location: ${user.location}</li>
+                <li>Status: ${user.status}</li>
+                <li>Message: ${user.comment}</li>
+              </ul>
+              <label>Edit Location:</label>
+              <input type="text" id="edit_red_location"placeholder="Please enter lat-long coordinates"><br>
+              <button id="${user.id}" onClick="editRedlocation_2(this.id)">Submit Edit</button>
+            `;
+          });
+          document.getElementById('results').innerHTML = output
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
+      }
+
+      //Consumes PATCH resource to edit Redflag location
+      function editRedlocation_2(post_id)
+      {
+        let token = sessionStorage.getItem('token');
+        let bearer ='Bearer '+ token;
+        let location = document.getElementById('edit_red_location').value;
+        fetch(`http://127.0.0.1:5000/api/v1/redflags/${post_id}/location`,{
+            method:'PATCH',
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Authorization':bearer,
+              'Content-type':'application/json'
+            },
+            body:JSON.stringify({location:location})
+            })
+        .then((res) => {
+          if (res.ok){
+            return res.json()
+          }
+          else{
+            return Promise.reject({
+              status: res.status
+            })
+          }
+        })
+        .then((data) => {
+          window.location.reload()
+        })
+        .catch(error => {
+            return console.log("Invalid ID")
+        })  
       }
     </script>
   </body>
