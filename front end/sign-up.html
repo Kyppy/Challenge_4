@@ -9,93 +9,52 @@
   	<meta name="author" content="Kyppy Simani">
     <title>iReporter | Register</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script type="text/javascript" src="js/users_script.js"></script>
   </head>
   <body>
 
-    <header>
-      <div class="container">
-        <div id="branding">
-          <h1><span class="highlight_i">i</span><span class="highlight_rep">Reporter</span></h1>
-        </div>
-        <nav>
-          <ul>
-            <li class="current"><a href="index.html">Home</a></li>
-            <li><a href="login.html">Log In</a></li>
-            <li><a href="admin.html">Administrator</a></li>
-          </ul>
-        </nav>
+  <header>
+    <div class="container">
+      <div id="branding">
+        <h1><span class="highlight_i">i</span><span class="highlight_rep">Reporter</span></h1>
       </div>
-    </header>
+      <nav>
+        <ul>
+          <li class="current"><a href="index.html">Home</a></li>
+          <li><a href="login.html">Log In</a></li>
+          <li><a href="admin.html">Administrator</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-    <section id="form">
-        <h3 class="form_head">Sign Up! Let your voice create change today!</h3>
-        <div class="dark">
-            <form id ="register" class="sign_up">
-                <label>First Name</label><br>
-                <input type="text" id="firstname" placeholder="First Name"><br>
-                <label>Last Name</label><br>
-                <input type="text" id="lastname" placeholder="Last Name"><br>
-                <label>Other Name(s)</label><br>
-                <input type="text" id="othername" placeholder="Other Name(s)"><br>
-                <label>Phone Number</label><br>
-                <input type="text" id="phonenumber" placeholder="Phone number format:012-345-6789"><br>
-                <label>Email</label><br>
-                <input type="email" id ="email" placeholder="Email Address"><br>
-                <label>Username</label><br>
-                <input type="text" id="username" placeholder="Username"><br>
-                <label>Password</label><br>
-                <input type="text" id ="password" placeholder="Input Password"><br>
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-    </section>
+  <section id="form">
+      <h3 class="form_head">Sign Up! Let your voice create change today!</h3>
+      <div class="dark">
+          <form id ="register" class="sign_up">
+              <label>First Name</label><br>
+              <input type="text" id="firstname" placeholder="First Name"><br>
+              <label>Last Name</label><br>
+              <input type="text" id="lastname" placeholder="Last Name"><br>
+              <label>Other Name(s)</label><br>
+              <input type="text" id="othername" placeholder="Other Name(s)"><br>
+              <label>Phone Number</label><br>
+              <input type="text" id="phonenumber" placeholder="Phone number format:012-345-6789"><br>
+              <label>Email</label><br>
+              <input type="email" id ="email" placeholder="Email Address"><br>
+              <label>Username</label><br>
+              <input type="text" id="username" placeholder="Username"><br>
+              <label>Password</label><br>
+              <input type="text" id ="password" placeholder="Input Password"><br>
+              <input type="submit" value="Submit"><br>
+              <label id="errorMessage"></label>
+          </form>
+      </div>
+  </section>
 
-    <script>
-      document.getElementById('register').addEventListener('submit', Signup);
-
-      function Signup(e){
-        e.preventDefault();
-
-        let firstname = document.getElementById('firstname').value;
-        let lastname = document.getElementById('lastname').value;
-        let othername = document.getElementById('othername').value;
-        let phonenumber = document.getElementById('phonenumber').value;
-        let email = document.getElementById('email').value;
-        let username = document.getElementById('username').value;
-        let password = document.getElementById('password').value;
-
-        fetch('http://127.0.0.1:5000/api/v1/auth/signup', {
-          method:'POST',
-          headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-type':'application/json'
-          },
-          body:JSON.stringify({firstname:firstname, lastname:lastname, 
-          othername:othername, phoneNumber:phonenumber, email:email,
-          username:username, password:password})
-        })
-        .then((res) => {
-          if (res.ok){
-            return res.json()
-          }
-          else{
-            return Promise.reject({
-              status: res.status
-            })
-          }
-        })
-        .then((data) => {
-          window.location='login.html'
-          return console.log(data.data[0].user)
-        })
-        .catch(error => {
-          if (error.status === 400){
-            return console.log("Bad Credentials")
-          }
-        })
-      }
-    
-    </script>
+  <script>
+    document.getElementById('register').addEventListener('submit', Signup);
+  </script>
 
   </body>
 </html>
