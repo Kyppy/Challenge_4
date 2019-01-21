@@ -9,6 +9,7 @@
   	<meta name="author" content="Kyppy Simani">
     <title>iReporter | Create Post</title>
     <link rel="stylesheet" href="./css/style.css">
+    <script type="text/javascript" src="js/users_script.js"></script>
   </head>
   <body>
 
@@ -37,8 +38,6 @@
                     <option value="Redflag">Redflag</option>
                     <option value="Intervention">Intervention</option>
                 </select><br>
-                <label>Title:</label>
-                <input type="text" placeholder="Title of post"><br>
                 <label>Message:</label>
                 <textarea id="message"></textarea><br>
                 <label>Location:</label>
@@ -47,8 +46,10 @@
                 <input type="file" id="image"accept="image/png, image/jpeg"><br>
                 <label>Video:</label>
                 <input type="file" id="video"accept="image/png, image/jpeg"><br>
+                <p id="errorMessage"></p>
+                <p id="successMessage"></p>
                 <div>
-                    <button class="button_2" type="submit">Post your message!</button>
+                    <button id="post-incident" class="button_2" type="submit">Post your message!</button>
                 </div>
               </form>
             </div>
@@ -60,80 +61,6 @@
 
       <script>
         document.getElementById("postMessage").addEventListener('submit', Post);
-  
-        function Post(e){
-          e.preventDefault();
-
-          let token = sessionStorage.getItem('token');
-          let bearer ='Bearer '+ token;
-          let incident = document.getElementById('incident').value;
-          let comment = document.getElementById('message').value;
-          let location = document.getElementById('location').value;
-          let Images = document.getElementById('image').value;
-          let Videos = document.getElementById('video').value;
-
-          if (incident ==="Intervention"){
-            fetch('http://127.0.0.1:5000/api/v1/interventions', {
-            method:'POST',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Authorization':bearer,
-              'Content-type':'application/json'
-            },
-            body:JSON.stringify({type:incident, comment:comment,
-            location:location, Images:"[Image]", Videos:"[Video]"})
-          })
-          .then((res) => {
-            if (res.ok){
-              return res.json()
-            } else{
-              return Promise.reject({
-                status: res.status
-              })
-            }
-          })
-          .then((data) => {
-            return console.log(data.data[0])
-          })
-          .catch(error => {
-            if (error.status === 400){
-              return console.log("Bad Credentials")
-            }
-          })
-          }else{
-            fetch('http://127.0.0.1:5000/api/v1/redflags', {
-            method:'POST',
-            headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Authorization':bearer,
-              'Content-type':'application/json'
-            },
-            body:JSON.stringify({type:incident, comment:comment,
-            location:location, Images:"[Image]", Videos:"[Video]"})
-          })
-          .then((res) => {
-            if (res.ok){
-              return res.json()
-            }
-            else{
-              return Promise.reject({
-                status: res.status
-              })
-            }
-          })
-          .then((data) => {
-            return console.log(data.data[0])
-          })
-          .catch(error => {
-            if (error.status === 400){
-              return console.log("Bad Credentials")
-            }
-          })
-          }
-          }
-      
       </script>
-
-
   </body>
 </html>
