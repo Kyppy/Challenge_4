@@ -68,3 +68,18 @@ class Login(Resource):
                    [{"token": access_token, "user": "Login successful."
                      "Welcome back {}!".format(username)}]}, 200
         return {"message": "Bad credentials.Login failed"}, 400
+
+
+class UserData(Resource):
+    def get(self, username):
+        user_info = []
+        user = db.get_user(username)
+        if(user):
+            user_data = {"firstname": user[0], "lastname": user[1],
+                         "othername": user[2], "email": user[3],
+                         "phoneNumber": user[4], "registered": user[5]}
+            user_info.append(user_data)
+            return {"status": 200, "data": user_info}, 200
+        else:
+            return{"message": "Requested user does not exist."}, 404
+      

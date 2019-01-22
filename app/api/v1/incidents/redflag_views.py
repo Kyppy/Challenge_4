@@ -30,7 +30,7 @@ class Redflags(Resource):
     @jwt_required
     def post(self):
         data = request.get_json(silent=True)
-        timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = now.strftime("%d-%m-%Y %H:%M:%S")
         coordinates = re.match(reg.latlong_pattern, data["location"])
         if coordinates:
             if data['comment'] is None or data['comment'] is "":

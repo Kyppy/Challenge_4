@@ -22,7 +22,7 @@
           <ul>
             <li><a href="user_home.html">Home</a></li>
             <li class="current"><a href="create_post.html">Post</a></li>
-            <li><a href="user_profile.html">Profile</a></li>
+            <li><a id="profile-link" href="user_profile.html">Profile</a></li>
             <li><a href="index.html">Log Out</a></li>
           </ul>
         </nav>
@@ -61,6 +61,8 @@
 
       <script>
         document.getElementById("postMessage").addEventListener('submit', Post);
+        //Sets profile page to current user
+        document.getElementById('profile-link').addEventListener('click',defaultProfile);
       </script>
   </body>
 </html>
