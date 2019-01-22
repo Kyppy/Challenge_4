@@ -169,3 +169,15 @@ function Post(e){
   }
 }
 
+//Sets 'user_profile' value in browser session storage based on clicked username.
+function setProfile(username)
+{
+    sessionStorage.setItem('user_profile',username)
+}
+
+//Sets 'user_profile' value in browser session storage to current logged-in user.
+function defaultProfile(username)
+{
+  let current_user = sessionStorage.getItem('user')
+  sessionStorage.setItem('user_profile',current_user)
+}

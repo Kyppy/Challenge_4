@@ -9,6 +9,7 @@
     <title>iReporter | Admin Homepage</title>
     <link rel="stylesheet" href="./css/style.css">
     <script type="text/javascript" src="js/incidents_script.js"></script>
+    <script type="text/javascript" src="js/users_script.js"></script>
   </head>
   <body>
 
@@ -21,7 +22,7 @@
           <ul>
             <li class="current"><a href="user_home.html">Home</a></li>
             <li><a href="create_post.html">Post</a></li>
-            <li><a href="user_profile.html">Profile</a></li>
+            <li><a id="profile-link" href="user_profile.html">Profile</a></li>
             <li><a href="index.html">Log Out</a></li>
           </ul>
         </nav>
@@ -122,6 +123,8 @@
   <script>
     //Return a single incident post based on its ID
     document.getElementById('admin_options').addEventListener('submit',searchPost);
+    //Sets profile page to current user
+    document.getElementById('profile-link').addEventListener('click',defaultProfile);
   </script>
   </body>
 </html>

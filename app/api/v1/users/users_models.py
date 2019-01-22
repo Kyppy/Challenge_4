@@ -92,6 +92,20 @@ class UsersDatabase():
         con.commit()
         con.close()
     
+    def get_user(self, username):
+        """Returns all user-specific credentials from the database."""
+        con = self.connect()
+        cursor = con.cursor()
+        cursor.execute("SELECT firstname,lastname,othername,email,phoneNumber,registered FROM users\
+                            WHERE username = %s", (username,))
+        user_data = cursor.fetchone()
+        cursor.close()
+        con.commit()
+        con.close()
+        if user_data is not None:
+            return user_data
+        return False
+    
     def insert_user(self, post_data):
         """Insert a new user row into the database"""
         con = self.connect()
@@ -105,7 +119,7 @@ class UsersDatabase():
         con.close()
     
     def user_list(self):
-        """Selects list of users in descending id order"""
+        """Selects list of user ids in descending id order"""
         con = self.connect()
         cursor = con.cursor()
         cursor.execute("SELECT id FROM users ORDER BY id DESC")

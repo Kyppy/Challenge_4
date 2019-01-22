@@ -8,7 +8,7 @@ from .incidents.intervention_views import Intervention, Interventions, \
                                           Interventionstatus, \
                                           UpdateInterventionComment, \
                                           UpdateInterventionLocation
-from .users.users_views import Signup, Login
+from .users.users_views import Signup, Login, UserData
 
 version_one = Blueprint('api_v1', __name__, url_prefix='/api/v1')
 api = Api(version_one)
@@ -30,3 +30,4 @@ api.add_resource(UpdateRedflagComment,
 api.add_resource(Interventionstatus,
                  '/interventions/<intervention_id>/status')
 api.add_resource(Redflagstatus, '/redflags/<redflag_id>/status')
+api.add_resource(UserData, '/user/<username>')
