@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+  </head>
+  <body>
+    <a href="user_home.html">Back</a>
+    <h3>Locate Incident</h3>
+    <!--The div element for the map -->
+    <div id="map"></div>
+    <script>
+    //Fetch and parse incident lat-long cooridnates
+    var lat_regex = new RegExp('[NS]');
+    var long_regex = new RegExp('[EW]');
+    var str = sessionStorage.getItem('map_coordinate')
+    var location_array = str.split(",")
+    if(location_array[0].includes("S")){
+      location_array[0]="-"+location_array[0]
+    }
+    if(location_array[1].includes("W")){
+      location_array[1]="-"+location_array[1]
+    }
+
+    var latitude = location_array[0].split(lat_regex);
+    var longitude = location_array[1].split(long_regex);
+    console.log(latitude)
+    console.log(longitude)
+    
+    // Initialize and add the map
+    function initMap() {
+    // The location of Incident
+    var incident = {lat: Number(latitude[0]), lng: Number(longitude[0])};
+    // The map, centered at Incident
+    var map = new google.maps.Map(
+        document.getElementById('map'), {zoom: 9, center: incident});
+    // The marker, positioned at Incident
+    var marker = new google.maps.Marker({position: incident, map: map});
+}
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key (which is not needed for this tutorial)
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgPbZ1v03a8g_3Ia9_tBq0FGmI4jTK2zs&callback=initMap"></script>
+    </script>
+  </body>
+</html>

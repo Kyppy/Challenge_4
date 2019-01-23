@@ -68,8 +68,8 @@
             <label>#:${user.id}</label>
             <label>Status: ${user.status}</label><br>
             <a id="user-profile" href="user_profile.html" onClick="setProfile('${user.createdBy}')">Author: ${user.createdBy}</a><br>
-            <label>Incident Location: ${user.location}</label><br>
-            <Label>Post Date: ${user.createdOn}</label><br>
+            <a id="incident-location" href="map.html" onClick="setCoordinate('${user.location}')">Incident Location: ${user.location}</a><br>
+            <label>Post Date: ${user.createdOn}</label><br>
             <p>${user.comment}</p>
             <button id="${user.id}" onClick="deleteIntervention(this.id)">DELETE</button>
             <button id="${user.id}" onClick="editIntercomment_1(this.id)">EDIT Comment</button>
@@ -93,8 +93,8 @@
             <label>#:${user.id}</label>
             <label>Status: ${user.status}</label><br>
             <a id="user-profile" href="user_profile.html" onClick="setProfile('${user.createdBy}')">Author: ${user.createdBy}</a><br>
-            <label>Incident Location: ${user.location}</label><br>
-            <Label>Post Date: ${user.createdOn}</label><br>
+            <a id="incident-location" href="map.html" onClick="setCoordinate('${user.location}')">Incident Location: ${user.location}</a><br>
+            <label>Post Date: ${user.createdOn}</label><br>
             <p>${user.comment}</p>
             <button id="${user.id}" onClick="deleteRedflag(this.id)">DELETE</button>
             <button id="${user.id}" onClick="editRedcomment_1(this.id)">EDIT Comment</button>
