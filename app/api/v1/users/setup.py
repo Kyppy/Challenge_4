@@ -11,4 +11,4 @@ class Regex():
         self.username_pattern = re.compile(r'^[a-zA-z0-9_.+!?@&-]{1,25}$')
         self.password_pattern = re.compile(r'^[a-zA-z0-9_.+!?@&-]{1,50}$')
         self.id_pattern = re.compile(r'^[0-9]+$')
-        self.latlong_pattern = re.compile(r'^[0-9]{1,2}[NS],[0-9]{1,2}[EW]$')
+        self.latlong_pattern = re.compile(r'^[0-9]{1,2}\.[0-9]{0,}[NS],[0-9]{1,3}\.[0-9]{0,}[EW]$')

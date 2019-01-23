@@ -181,3 +181,9 @@ function defaultProfile(username)
   let current_user = sessionStorage.getItem('user')
   sessionStorage.setItem('user_profile',current_user)
 }
+
+//Sets 'map_coordinate' value in browser session storage to selected incident location coordinates.
+function setCoordinate(location)
+{
+  sessionStorage.setItem('map_coordinate',location)
+}
