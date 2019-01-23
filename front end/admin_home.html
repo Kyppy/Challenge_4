@@ -10,23 +10,42 @@
     <link rel="stylesheet" href="./css/style.css">
     <script type="text/javascript" src="js/incidents_script.js"></script>
     <script type="text/javascript" src="js/users_script.js"></script>
+    <script>
+      let user = sessionStorage.getItem('user')
+      let token = sessionStorage.getItem('token');
+      let bearer ='Bearer '+ token;
+      fetch(`http://127.0.0.1:5000/api/v1/session/${user}`, {
+      method:'GET',
+      headers: {
+        'Authorization':bearer
+      }
+      })
+      .then((res) => {
+        if (res.ok){
+          return console.log("Authorized session")
+        } 
+        else{
+          window.location = "login.html"
+        }
+      })
+    </script>
   </head>
   <body>
 
   <header>
-      <div class="container">
-        <div id="branding">
-          <h1><span class="highlight_i">i</span><span class="highlight_rep">Reporter</span></h1>
-        </div>
-        <nav>
-          <ul>
-            <li class="current"><a href="user_home.html">Home</a></li>
-            <li><a href="create_post.html">Post</a></li>
-            <li><a id="profile-link" href="user_profile.html">Profile</a></li>
-            <li><a href="index.html">Log Out</a></li>
-          </ul>
-        </nav>
+    <div class="container">
+      <div id="branding">
+        <h1><span class="highlight_i">i</span><span class="highlight_rep">Reporter</span></h1>
       </div>
+      <nav>
+        <ul>
+          <li class="current"><a href="user_home.html">Home</a></li>
+          <li><a href="create_post.html">Post</a></li>
+          <li><a id="profile-link" href="user_profile.html">Profile</a></li>
+          <li><a href="index.html" onclick="clearSession()">Log Out</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <header id="admin_filter">
@@ -52,7 +71,7 @@
   <div id="redflags"></div>
 
   <footer>
-    <p>iReporter, Copyright &copy; 2018</p>
+    <p>iReporter, Copyright &copy; 2019</p>
   </footer>
 
   <script>
@@ -67,8 +86,8 @@
           <div class="posts">
             <label>#:${user.id}</label>
             <label>Status: ${user.status}</label><br>
-            <label>Author: ${user.createdBy}</label><br>
-            <label>Incident Location: ${user.location}</label><br>
+            <a id="user-profile" href="user_profile.html" onClick="setProfile('${user.createdBy}')">Author: ${user.createdBy}</a><br>
+            <a id="incident-location" href="map.html" onClick="setCoordinate('${user.location}')">Incident Location: ${user.location}</a><br>
             <Label>Post Date: ${user.createdOn}</label><br>
             <p>${user.comment}</p>
             <button id="${user.id}" onClick="deleteIntervention(this.id)">DELETE</button>
@@ -98,8 +117,8 @@
           <div class="posts">
             <label>#:${user.id}</label>
             <label>Status: ${user.status}</label><br>
-            <label>Author: ${user.createdBy}</label><br>
-            <label>Incident Location: ${user.location}</label><br>
+            <a id="user-profile" href="user_profile.html" onClick="setProfile('${user.createdBy}')">Author: ${user.createdBy}</a><br>
+            <a id="incident-location" href="map.html" onClick="setCoordinate('${user.location}')">Incident Location: ${user.location}</a><br>
             <Label>Post Date: ${user.createdOn}</label><br>
             <p>${user.comment}</p>
             <button id="${user.id}" onClick="deleteIntervention(this.id)">DELETE</button>

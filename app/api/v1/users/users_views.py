@@ -81,5 +81,15 @@ class UserData(Resource):
             user_info.append(user_data)
             return {"status": 200, "data": user_info}, 200
         else:
-            return{"message": "Requested user does not exist."}, 404
-      
+            return {"message": "Requested user does not exist."}, 404
+
+
+class SessionAuth(Resource):
+    @jwt_required
+    def get(self, username):
+        user = username
+        token = get_jwt_identity()
+        if (user == token):
+            return {"status": 200, "message": "Authorized Session"}, 200
+        else:
+            return {"message": "Invalid session token for current user."}, 401

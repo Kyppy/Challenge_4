@@ -10,6 +10,25 @@
     <title>iReporter | Create Post</title>
     <link rel="stylesheet" href="./css/style.css">
     <script type="text/javascript" src="js/users_script.js"></script>
+    <script>
+      let user = sessionStorage.getItem('user')
+      let token = sessionStorage.getItem('token');
+      let bearer ='Bearer '+ token;
+      fetch(`http://127.0.0.1:5000/api/v1/session/${user}`, {
+      method:'GET',
+      headers: {
+        'Authorization':bearer
+      }
+      })
+      .then((res) => {
+        if (res.ok){
+          return console.log("Authorized session")
+        } 
+        else{
+          window.location = "login.html"
+        }
+      })
+      </script>
   </head>
   <body>
 
@@ -23,7 +42,7 @@
             <li><a href="user_home.html">Home</a></li>
             <li class="current"><a href="create_post.html">Post</a></li>
             <li><a id="profile-link" href="user_profile.html">Profile</a></li>
-            <li><a href="index.html">Log Out</a></li>
+            <li><a href="index.html" onclick="clearSession()">Log Out</a></li>
           </ul>
         </nav>
       </div>
