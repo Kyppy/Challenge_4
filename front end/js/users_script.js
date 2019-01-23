@@ -187,3 +187,9 @@ function setCoordinate(location)
 {
   sessionStorage.setItem('map_coordinate',location)
 }
+
+//Clears session data on user log-out
+function clearSession()
+{
+  sessionStorage.clear()
+}
