@@ -10,12 +10,14 @@ This project contains resources for the iReporter webapp API. These resources wi
 **Built With:**
 * Python 3.7
 * PostgreSQL
-* Flask 
+* Flask
+* Javascript(Vanilla)
 
 ## Features ##
 * Users can create and log onto their iReporter account.
 * Users can post incident reports.These reports can be edited or deleted, and can include video,images,latitude-longitude coordinates as well as a comment describing the incident .
 * Admin users can determine the validity of a normal user report by marking them as eiether under investigation, resolved or rejected.
+* Incident locations can be viewed using Google Maps
 
 
 
