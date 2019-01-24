@@ -22,8 +22,8 @@ function searchPost(event){
           output += `
           <label>#:${user.id}</label>
           <label>Status: ${user.status}</label><br>
-          <label>Author: ${user.createdBy}</label><br>
-          <label>Incident Location: ${user.location}</label><br>
+          <a id="user-profile" href="user_profile.html" onClick="setProfile('${user.createdBy}')">Author: ${user.createdBy}</a><br>
+          <a id="incident-location" href="map.html" onClick="setCoordinate('${user.location}')">Incident Location: ${user.location}</a><br>
           <Label>Post Date: ${user.createdOn}</label><br>
           <p>${user.comment}</p>
           `;
@@ -53,8 +53,8 @@ function searchPost(event){
           output += `
           <label>#:${user.id}</label>
           <label>Status: ${user.status}</label><br>
-          <label>Author: ${user.createdBy}</label><br>
-          <label>Incident Location: ${user.location}</label><br>
+          <a id="user-profile" href="user_profile.html" onClick="setProfile('${user.createdBy}')">Author: ${user.createdBy}</a><br>
+          <a id="incident-location" href="map.html" onClick="setCoordinate('${user.location}')">Incident Location: ${user.location}</a><br>
           <Label>Post Date: ${user.createdOn}</label><br>
           <p>${user.comment}</p>
           `;
