@@ -63,7 +63,23 @@ class UsersDatabase():
         cursor.close()
         con.commit()
         con.close()
-    
+
+    def check_privilege(self, username):
+        """Determine access privileges of user
+        and return boolean based on result."""
+        con = self.connect()
+        cursor = con.cursor()
+        cursor.execute("SELECT isAdmin \
+                      FROM users WHERE username = %s", (username,))
+        privilege = cursor.fetchone()
+        cursor.close()
+        con.commit()
+        con.close()
+        if (privilege[0] is True):
+            return True
+        else:
+            return False
+
     def check_valid(self, username, password):
         """Compare input username to existing usernames in database.
         If username matches return hashed password."""
@@ -82,7 +98,7 @@ class UsersDatabase():
         if sha256_crypt.verify(password, credentials[1]):
             return True
         return False
-    
+
     def drop_tables(self):
         """Drop 'users' table from database"""
         con = self.connect()
@@ -91,7 +107,7 @@ class UsersDatabase():
         cursor.close()
         con.commit()
         con.close()
-    
+
     def get_user(self, username):
         """Returns all user-specific credentials from the database."""
         con = self.connect()
@@ -105,19 +121,19 @@ class UsersDatabase():
         if user_data is not None:
             return user_data
         return False
-    
+
     def insert_user(self, post_data):
         """Insert a new user row into the database"""
         con = self.connect()
         cursor = con.cursor()
         sql = """INSERT INTO users(firstname, lastname, othername, email,
-                 phoneNumber, username, password, isAdmin) VALUES(%s, %s, %s, 
+                 phoneNumber, username, password, isAdmin) VALUES(%s, %s, %s,
                  %s, %s, %s, %s, %s)"""
         cursor.execute(sql, post_data)
         cursor.close()
         con.commit()
         con.close()
-    
+
     def user_list(self):
         """Selects list of user ids in descending id order"""
         con = self.connect()
@@ -128,7 +144,7 @@ class UsersDatabase():
         con.commit()
         con.close()
         return record
-    
+
     def tables(self):
         users = """CREATE TABLE IF NOT EXISTS users (
             id SERIAL PRIMARY KEY,

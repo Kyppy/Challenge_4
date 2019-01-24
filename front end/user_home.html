@@ -29,6 +29,9 @@
         }
       })
     </script>
+    <script>
+      checkPrivilege(user)
+    </script>
   </head>
   <body>
 
@@ -51,7 +54,7 @@
   <header id="admin_filter">
     <h>Search Incident By ID:</h>
       <div>
-          <form id="admin_options">
+          <form id="admin_options" autocomplete="off">
               <label>ID:</label>
               <input type="text" id ="post_id"placeholder="Enter incident ID">
               <label>Record Type:</label>

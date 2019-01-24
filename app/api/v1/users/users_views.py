@@ -45,9 +45,13 @@ class Signup(Resource):
                 return{"status": 201, "data":
                        [{"token": access_token, "user": "Sign-up Complete!"
                          "Welcome to the app {}!".format(username)}]}, 201
-            return {"message": "Bad credentials.Signup failed"}, 400
+            return {"message": "Signup failed.Your chosen username and/or "
+                               "password is already in use. "
+                               "Please select another."}, 400
         return {"message": "Signup failed.Please ensure that your "
-                           "credentials are correctly formatted."}, 400
+                           "information is entered correctly: "
+                           "no blank spaces were entered in any field "
+                           "and that the correct formatting was applied."}, 400
 
 
 class Login(Resource):
@@ -93,3 +97,12 @@ class SessionAuth(Resource):
             return {"status": 200, "message": "Authorized Session"}, 200
         else:
             return {"message": "Invalid session token for current user."}, 401
+
+
+class UserPrivilege(Resource):
+    def get(self, username):
+        privilege = db.check_privilege(username)
+        if (privilege is True):
+            return {"message": "Privilege elevated.", "data": privilege}, 200
+        else:
+            return {"message": "Privilege standard.", "data": privilege}, 200

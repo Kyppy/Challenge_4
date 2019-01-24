@@ -193,3 +193,32 @@ function clearSession()
 {
   sessionStorage.clear()
 }
+
+//Checks if user has elevated permissions/privileges
+function checkPrivilege(username)
+{
+  fetch(`http://127.0.0.1:5000/api/v1/priv/${username}`)
+  .then((res) => {
+    if (res.ok){
+      console.log(incident)
+      return res.json()
+    }
+    else{
+      return Promise.reject(
+        res.json()
+      )
+    }
+  })
+  .then((data) => {
+    if (data.data){
+      window.location = "admin_home.html"
+      return console.log("User privileges:elevated.")
+    }
+    else{
+      return console.log("User privilege:standard")
+    }
+  })
+  .catch(error => {
+    return console.log(error)
+ })
+}
